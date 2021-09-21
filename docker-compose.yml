@@ -1,0 +1,26 @@
+version: "3.7"
+services:
+  database:
+    image: mysql
+    container_name: mysql-api-descomplica
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_DATABASE: api_descomplica
+      MYSQL_ROOT_PASSWORD: pssS76TiD5
+    volumes: 
+      - ./api/db/data:/var/lib/mysql
+    ports:
+      - 3308:3306
+
+  api:
+    build:
+        "./api"
+    container_name: node-api-descomplica
+    restart: always
+    volumes:
+      - ./api:/home/node/app
+    ports:
+      - 4000:4000
+    depends_on:
+      - database  
