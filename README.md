@@ -8,7 +8,7 @@ O comando **docker-composer up -d** levanta os containers Mysql e API Node
 
 
 # Acessando a API
-Para acesso a API utilizar o endereço localhost:4000
+Para acesso a API utilizar o endereço http://localhost:4000/graphql
 
 ## Consultas
 * Listar todos os registros
