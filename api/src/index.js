@@ -25,6 +25,11 @@ const typeDefs = gql`
 
     type Query {
         students: [Student!]!
+        searchStudent(q: String!): [Student]
+    }
+
+    type Mutation {
+        createStudent(name: String!, email: String!, cpf: String!): Student
     }
 `
 let students = []
@@ -45,17 +50,51 @@ connection.query(
                 cpf: item.cpf
             }
         })
-
-        console.log(rows)
-        console.log(fields)
     })
-
-connection.end()
 
 // Resolvers
 const resolvers = {
     Query: {
-        students: () => students
+        students: () => students,
+        searchStudent: (_, args) => {
+            let query = []
+
+            for (p = 0; p < 3; p++) {
+                query.push('%' + args.q + '%')
+            }
+
+            return connection.promise().query('SELECT * FROM students WHERE name LIKE ? OR cpf LIKE ? OR email LIKE ?', query)
+            .then((rows) => {
+                student = rows[0].map((item) => {
+                    return {
+                        id: item.id,
+                        name: item.name,
+                        email: item.email,
+                        cpf: item.cpf
+                    }
+                })
+
+                console.log(student)
+
+                return student
+            })
+            .catch((err) => console.log(err))
+            //.then(() => connection.end())
+        }
+    },
+    Mutation: {
+        createStudent: (_, args) => {
+            const newStudent = {
+                id: 10,
+                name: args.name,
+                email: args.email,
+                cpf: args.cpf
+            }
+
+            students.push(newStudent)
+
+            return newStudent
+        }
     }
 }
 
