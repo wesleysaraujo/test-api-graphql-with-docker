@@ -12,23 +12,28 @@ Para acesso a API utilizar o endereço localhost:4000
 
 ## Consultas
 * Listar todos os registros
-```query {
+```
+query {
     students {
         name
         email
         cpf
     }
-}```
+}
+```
 * Filtrar usuários por Nome, E-mail ou CPF
-```query($searchStudentQ: String!){
+```
+query($searchStudentQ: String!){
     searchStudent(q: $searchStudentQ) {
         name,
         email,
         cpf
     }
-}```
+}
+```
 * Inserir novo registro no banco
-```mutation CreateStudentMutation(
+```
+mutation CreateStudentMutation(
     $createStudentName: String!, 
     $createStudentEmail: String!, 
     $createStudentCpf: String!) {
@@ -40,14 +45,16 @@ Para acesso a API utilizar o endereço localhost:4000
         email
         cpf
     }
-}```
+}
+```
 
 ## Proxy Reverso
 Não consegui implementar nenhuma solução automatizada para o proxy reverso, mas o basico do basico, seria:
 * criar um arquivo api-descomplica.test.conf em /etc/nginx/conf.d
 ```sudo nano /etc/nginx/conf.d/api-descomplica.test.conf```
 * Colocar o seguinte conteúdo no arquivo:
-```server {
+```
+server {
     listen 80;
 
     server_name api-descomplica.test;
@@ -55,16 +62,17 @@ Não consegui implementar nenhuma solução automatizada para o proxy reverso, m
     location / {
         proxy_pass http://127.0.0.1:4000/;
     }
-}```
+}
+```
 * Salvar o arquivo usando o CTRL + O
 * Testar a configuração do nginx com:
-```sudo nginx -t
+``sudo nginx -t``
 * Restartar o Nginx:
-```sudo systemctl restart nginx
+```sudo systemctl restart nginx```
 
 ## Visualizar logs da API
 Para viusalizar os logs de execução da API, basta rodar o comando:
-```docker logs -f ID_DO_CONTAINER_NODEJS
+```docker logs -f ID_DO_CONTAINER_NODEJS```
 
 ## Possíveis refatoração do código
 * É possível refatorar esse código de forma que ele fique modularizado, criando modules do graphql separando as typesdefs por schemas com extensão .gql
