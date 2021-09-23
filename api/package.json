@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Aplicação teste para vaga Full Stack Engineer",
   "main": "src/index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon ./src/index.js"
@@ -10,6 +11,10 @@
   "author": "Wesley Serafim",
   "license": "ISC",
   "devDependencies": {
+    "@babel/cli": "^7.15.7",
+    "@babel/core": "^7.15.5",
+    "@babel/node": "^7.15.4",
+    "@babel/preset-env": "^7.15.6",
     "nodemon": "^2.0.12"
   },
   "dependencies": {

@@ -3,11 +3,13 @@ CREATE DATABASE IF NOT EXISTS
 USE api_descomplica;
 
 CREATE TABLE IF NOT EXISTS students (
-    id BIGINT(20) AUTO_INCREMENT,
-    name VARCHAR(255),
-    email VARCHAR(255),
-    cpf VARCHAR(14),
-    PRIMARY KEY (id)
+    id BIGINT(20) NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    cpf VARCHAR(14) NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY `email_UNIQUE` (`email`),
+    UNIQUE KEY `cpf_UNIQUE` (`cpf`)
 );
 
 INSERT INTO students VALUE(0,'Maria Marta de Medeiros', 'marta.maria@gmail.com', '85030254420');
