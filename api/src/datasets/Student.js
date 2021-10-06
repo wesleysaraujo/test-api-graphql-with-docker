@@ -54,16 +54,26 @@ export async function searchStudent(term) {
 }
 
 export async function createStudent(student) {
-    var resultInfo
+    var resultInfo = {}
+
     await connection.promise()
     .query('INSERT INTO students (name, email, cpf) VALUES (?, ?, ?)', student)
+    .then(result => result[0])
     .then((result) => {
-        resultInfo = result
+        resultInfo = {
+            id: result.insertId,
+            name: student[0],
+            email: student[1],
+            cpf: student[2]
+        }
     })
     .catch((err) => {
         console.error(err)
         resultInfo = err.sqlMessage
     })
+
+    console.log('Resultado da query:')
+    console.info(resultInfo)
 
     return resultInfo
 }
